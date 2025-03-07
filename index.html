@@ -4,175 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Dimension Converter</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 94.85vh;
-            position: relative;
-            background-color: #45a049;
-        }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 10px;
-            border: black;
-            border-radius: 10px;
-            border-style: groove;
-            flex: 1;
-            background-color: rgba(255, 255, 255, 0.9);
-            /* Semi-transparent background */
-            position: relative;
-            z-index: 1;
-            /* Ensure content is above the watermark */
-            display: flex;
-            flex-direction: column;
-            min-height: 100%;
-        }
-
-        .input-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        input,
-        select,
-        button {
-            padding: 10px;
-            box-sizing: border-box;
-            flex: 1 1 150px;
-            /* Flex-grow, flex-shrink, flex-basis */
-        }
-
-        input[type="number"] {
-            width: 100%;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-
-        }
-
-        button.delete-btn {
-            background-color: #ff4444;
-
-        }
-
-        button.delete-btn:hover {
-            background-color: #cc0000;
-        }
-
-        button.reset-btn {
-            background-color: #ff9800;
-        }
-
-        button.reset-btn:hover {
-            background-color: #e68900;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #f2f2f2;
-            margin-top: auto;
-            border-top: 1px solid #ddd;
-            border-radius: 0 0 10px 10px;
-            /* Rounded corners at the bottom */
-        }
-
-        /* Watermark Style */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('assets/img/icon.png');
-            /* Replace with your logo path */
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 30%;
-            /* Adjust the size of the logo */
-            opacity: 10;
-            /* Adjust the opacity of the watermark */
-            z-index: 0;
-            /* Ensure the watermark is behind the container */
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .input-group {
-                flex-direction: column;
-            }
-
-            input,
-            select,
-            button {
-                width: 100%;
-                flex: 1 1 auto;
-            }
-
-            table {
-                font-size: 14px;
-            }
-
-            th,
-            td {
-                padding: 6px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th,
-            td {
-                padding: 4px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -245,17 +79,23 @@
             }
 
             // Original data
-            const originalRow = [`${length} ${originalUnitType}`, `${width} ${originalUnitType}`, `${height} ${originalUnitType}`];
+            const originalRow = [
+                `${length} ${originalUnitType}`,
+                `${width} ${originalUnitType}`,
+                `${height} ${originalUnitType}`
+            ];
 
             // Convert data to the selected unit
             const lengthConverted = convertUnit(length, originalUnitType, convertUnitType);
             const widthConverted = convertUnit(width, originalUnitType, convertUnitType);
             const heightConverted = convertUnit(height, originalUnitType, convertUnitType);
 
+            // Format converted values to 2 decimal places
             const convertedRow = [
-                `${lengthConverted.toFixed(2)} ${convertUnitType}`,
-                `${widthConverted.toFixed(2)} ${convertUnitType}`,
-                `${heightConverted.toFixed(2)} ${convertUnitType}`];
+                `${parseFloat(lengthConverted.toFixed(2))} ${convertUnitType}`,
+                `${parseFloat(widthConverted.toFixed(2))} ${convertUnitType}`,
+                `${parseFloat(heightConverted.toFixed(2))} ${convertUnitType}`
+            ];
 
             // Combine original and converted data
             const combinedRow = [...originalRow, ...convertedRow];
@@ -327,18 +167,38 @@
         }
     </script>
     <script>
-        // Register the service worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
                     .then((registration) => {
                         console.log('Service Worker registered: ', registration);
+
+                        // Check for updates
+                        if (registration.waiting) {
+                            updateServiceWorker(registration);
+                        }
+
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    updateServiceWorker(registration);
+                                }
+                            });
+                        });
                     })
                     .catch((error) => {
                         console.log('Service Worker registration failed: ', error);
                     });
             });
         }
+
+        function updateServiceWorker(registration) {
+            if (confirm('New version available. Update now?')) {
+                registration.waiting.postMessage({ action: 'skipWaiting' });
+            }
+        }
+
     </script>
 </body>
 
