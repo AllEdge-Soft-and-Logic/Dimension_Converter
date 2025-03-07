@@ -1,10 +1,13 @@
 // service-worker.js
 
-const CACHE_NAME = 'dimension-converter-v1';
+const CACHE_NAME = 'dimension-converter-v3.00';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
-    '/assets/img/icon.png', // Add paths to all static assets (CSS, JS, images, etc.)
+    '/assets/img/icon.png',
+    '/style.css',
+
+    // Add paths to all static assets (CSS, JS, images, etc.)
     // Add other assets you want to cache
 ];
 

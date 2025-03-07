@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
     <title>Dimension Converter</title>
 
 </head>
@@ -78,30 +79,29 @@
                 return;
             }
 
-            // Original data
+            // Original data (formatted to 2 decimal places)
             const originalRow = [
-                `${length} ${originalUnitType}`,
-                `${width} ${originalUnitType}`,
-                `${height} ${originalUnitType}`
+                `${length.toFixed(2)} ${originalUnitType}`,
+                `${width.toFixed(2)} ${originalUnitType}`,
+                `${height.toFixed(2)} ${originalUnitType}`
             ];
 
-            // Convert data to the selected unit
-            const lengthConverted = convertUnit(length, originalUnitType, convertUnitType);
-            const widthConverted = convertUnit(width, originalUnitType, convertUnitType);
-            const heightConverted = convertUnit(height, originalUnitType, convertUnitType);
+            // Convert data to the selected unit (formatted to 2 decimal places)
+            const lengthConverted = convertUnit(length, originalUnitType, convertUnitType).toFixed(2);
+            const widthConverted = convertUnit(width, originalUnitType, convertUnitType).toFixed(2);
+            const heightConverted = convertUnit(height, originalUnitType, convertUnitType).toFixed(2);
 
-            // Format converted values to 2 decimal places
             const convertedRow = [
-                `${parseFloat(lengthConverted.toFixed(2))} ${convertUnitType}`,
-                `${parseFloat(widthConverted.toFixed(2))} ${convertUnitType}`,
-                `${parseFloat(heightConverted.toFixed(2))} ${convertUnitType}`
+                `${lengthConverted} ${convertUnitType}`,
+                `${widthConverted} ${convertUnitType}`,
+                `${heightConverted} ${convertUnitType}`
             ];
 
             // Combine original and converted data
             const combinedRow = [...originalRow, ...convertedRow];
             combinedData.push(combinedRow);
 
-            // Add row to the combined table
+            // Add row to the table
             addRowToTable('combinedTable', combinedRow);
         }
 
@@ -119,9 +119,10 @@
         function addRowToTable(tableId, rowData) {
             const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
             const newRow = table.insertRow();
+
             rowData.forEach(data => {
                 const cell = newRow.insertCell();
-                cell.textContent = data;
+                cell.textContent = data; // Values already formatted to 2 decimals
             });
 
             // Add delete button
@@ -136,33 +137,23 @@
         }
 
         function deleteRow(tableId, rowIndex) {
-            // Remove row from the table
             const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
             table.deleteRow(rowIndex);
-
-            // Remove corresponding data from the array
             combinedData.splice(rowIndex, 1);
         }
 
         function resetData() {
-            // Clear the data array
             combinedData.length = 0;
-
-            // Clear the table body
             document.getElementById('combinedTable').getElementsByTagName('tbody')[0].innerHTML = '';
         }
 
         function exportToExcel() {
             const wb = XLSX.utils.book_new();
-
-            // Combined Data Sheet
             const combinedWs = XLSX.utils.aoa_to_sheet([
                 ["Original Length", "Original Width", "Original Height", "Converted Length", "Converted Width", "Converted Height"],
                 ...combinedData
             ]);
             XLSX.utils.book_append_sheet(wb, combinedWs, "Combined Data");
-
-            // Export to Excel
             XLSX.writeFile(wb, "Combined_Dimension_Data.xlsx");
         }
     </script>
