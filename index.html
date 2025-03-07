@@ -252,7 +252,10 @@
             const widthConverted = convertUnit(width, originalUnitType, convertUnitType);
             const heightConverted = convertUnit(height, originalUnitType, convertUnitType);
 
-            const convertedRow = [`${lengthConverted.toFixed(4)} ${convertUnitType}`, `${widthConverted.toFixed(4)} ${convertUnitType}`, `${heightConverted.toFixed(4)} ${convertUnitType}`];
+            const convertedRow = [
+                `${lengthConverted.toFixed(2)} ${convertUnitType}`,
+                `${widthConverted.toFixed(2)} ${convertUnitType}`,
+                `${heightConverted.toFixed(2)} ${convertUnitType}`];
 
             // Combine original and converted data
             const combinedRow = [...originalRow, ...convertedRow];
