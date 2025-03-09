@@ -37,8 +37,8 @@
             <button onclick="exportToExcel()" class="download-btn">Download Excel</button>
             <button onclick="resetData()" class="reset-btn">Reset</button>
         </div>
-        <h2>Combined Data</h2>
-        <div class="mt-4 scrollable-table">
+        <h2>Convert Data</h2>
+        <div class="scrollable-table">
             <table id="combinedTable">
                 <thead>
                     <tr>
@@ -57,9 +57,10 @@
                 <tbody></tbody>
             </table>
         </div>
+
         <!-- Footer inside the container -->
         <footer>
-            <p>&copy; 2018 AllEdge Soft & Logic (OPC) Pvt. Ltd., All rights reserved.</p>
+            <p>&copy; 2018 AllEdge Soft & Logic (OPC) Pvt. Ltd., All rights reserved. <span id="version"></span></p>
             <span style="font-size: small;">Surface Mode Domestic</span>
         </footer>
     </div>
@@ -147,6 +148,40 @@
             combinedData.length = 0;
             document.getElementById('combinedTable').getElementsByTagName('tbody')[0].innerHTML = '';
         }
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered: ', registration);
+
+                        // Check for updates
+                        if (registration.waiting) {
+                            updateServiceWorker(registration);
+                        }
+
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    updateServiceWorker(registration);
+                                }
+                            });
+                        });
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed: ', error);
+                    });
+            });
+        }
+
+        function updateServiceWorker(registration) {
+            if (confirm('New version available. Update now?')) {
+                registration.waiting.postMessage({ action: 'skipWaiting' });
+            }
+        }
+
     </script>
 </body>
 

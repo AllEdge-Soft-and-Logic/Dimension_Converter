@@ -174,14 +174,28 @@ body::before {
     }
 }
 
-/* Scrollable Tables */
+/* Scrollable Table */
 .scrollable-table {
-    overflow: auto;
+    display: block;
+    overflow-y: auto;
     max-height: 300px;
-    max-width: 100%;
+    /* Adjust as needed */
+    border: 1px solid #ddd;
+    /* Optional: adds a border */
 }
 
+/* Ensure the table behaves properly inside the scrollable div */
 .scrollable-table table {
     width: 100%;
-    min-width: 600px;
+    min-width: 800px;
+    /* Ensures proper scrolling */
+    border-collapse: collapse;
+}
+
+/* Make the header sticky (Optional for better visibility) */
+.scrollable-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    z-index: 2;
 }
