@@ -173,3 +173,15 @@ body::before {
         padding: 4px;
     }
 }
+
+/* Scrollable Tables */
+.scrollable-table {
+    overflow: auto;
+    max-height: 300px;
+    max-width: 100%;
+}
+
+.scrollable-table table {
+    width: 100%;
+    min-width: 600px;
+}

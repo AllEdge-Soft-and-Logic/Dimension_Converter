@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h1 style="text-align: center; background-color:blue; color: white; padding: 0.2em; border-radius: 10px;">
-            Dimension Converter- <span style="font-size: small;">Surface Mode Domestic</span></h1>
+            Dimension Converter</h1>
         <div class="input-group">
             <select id="originalUnitType">
                 <option value="cm">Centimeters (cm)</option>
@@ -38,26 +38,29 @@
             <button onclick="resetData()" class="reset-btn">Reset</button>
         </div>
         <h2>Combined Data</h2>
-        <table id="combinedTable">
-            <thead>
-                <tr>
-                    <th>Original Length</th>
-                    <th>Original Width</th>
-                    <th>Original Height</th>
-                    <th>Actual Weight</th>
-                    <th>Converted Length</th>
-                    <th>Converted Width</th>
-                    <th>Converted Height</th>
-                    <th>Volumetric Weight</th>
-                    <th>Chargeable Weight</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="mt-4 scrollable-table">
+            <table id="combinedTable">
+                <thead>
+                    <tr>
+                        <th>Original Length</th>
+                        <th>Original Width</th>
+                        <th>Original Height</th>
+                        <th>Actual Weight</th>
+                        <th>Converted Length</th>
+                        <th>Converted Width</th>
+                        <th>Converted Height</th>
+                        <th>Volumetric Weight</th>
+                        <th>Chargeable Weight</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
         <!-- Footer inside the container -->
         <footer>
             <p>&copy; 2018 AllEdge Soft & Logic (OPC) Pvt. Ltd., All rights reserved.</p>
+            <span style="font-size: small;">Surface Mode Domestic</span>
         </footer>
     </div>
 
