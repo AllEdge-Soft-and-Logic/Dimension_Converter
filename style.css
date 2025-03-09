@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 10px;
@@ -12,41 +13,45 @@ body {
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 5px;
-    border: black;
+    padding: 20px;
+    border: 1px solid black;
     border-radius: 10px;
     border-style: groove;
     flex: 1;
     background-color: rgba(255, 255, 255, 0.9);
-    /* Semi-transparent background */
     position: relative;
     z-index: 1;
-    /* Ensure content is above the watermark */
     display: flex;
     flex-direction: column;
     min-height: 100%;
 }
 
+/* Input Group */
 .input-group {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-input,
-select,
-button {
+.input-group input,
+.input-group select {
     padding: 10px;
-    box-sizing: border-box;
-    flex: 1 1 150px;
-    /* Flex-grow, flex-shrink, flex-basis */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex: 1 1 200px;
+    /* Adjusted flex-basis to 200px for better sizing */
+    min-width: 150px;
+    /* Ensures a minimum width for smaller screens */
 }
 
-input[type="number"] {
-    width: 100%;
+.input-group button {
+    flex: 1 1 auto;
+    min-width: 100px;
+    /* Ensures buttons don't become too small */
 }
 
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -64,17 +69,18 @@ th {
     background-color: #f2f2f2;
 }
 
+/* Button Styles */
 button {
-    background-color: #4CAF50;
-    color: white;
+    padding: 10px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-
+    transition: background-color 0.3s ease;
 }
 
 button.delete-btn {
     background-color: #ff4444;
-
+    color: white;
 }
 
 button.delete-btn:hover {
@@ -83,6 +89,7 @@ button.delete-btn:hover {
 
 button.reset-btn {
     background-color: #ff9800;
+    color: white;
 }
 
 button.reset-btn:hover {
@@ -91,17 +98,14 @@ button.reset-btn:hover {
 
 button.download-btn {
     background-color: blue;
+    color: white;
 }
 
 button.download-btn:hover {
     background-color: darkblue;
-
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
+/* Footer Styles */
 footer {
     text-align: center;
     padding: 10px;
@@ -109,7 +113,6 @@ footer {
     margin-top: auto;
     border-top: 1px solid #ddd;
     border-radius: 0 0 10px 10px;
-    /* Rounded corners at the bottom */
 }
 
 /* Watermark Style */
@@ -121,15 +124,32 @@ body::before {
     right: 0;
     bottom: 0;
     background-image: url('assets/img/icon.png');
-    /* Replace with your logo path */
     background-repeat: no-repeat;
     background-position: center;
     background-size: 30%;
-    /* Adjust the size of the logo */
-    opacity: 10;
-    /* Adjust the opacity of the watermark */
+    opacity: 0.1;
     z-index: 0;
-    /* Ensure the watermark is behind the container */
+}
+
+/* Scrollable Table */
+.scrollable-table {
+    display: block;
+    overflow-y: auto;
+    max-height: 300px;
+    border: 1px solid #ddd;
+}
+
+.scrollable-table table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+}
+
+.scrollable-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    z-index: 2;
 }
 
 /* Responsive Design */
@@ -138,15 +158,15 @@ body::before {
         flex-direction: column;
     }
 
-    input,
-    select,
-    button {
+    .input-group input,
+    .input-group select,
+    .input-group button {
         width: 100%;
         flex: 1 1 auto;
     }
 
     table {
-        font-size: 14px;
+        font-size: 10px;
     }
 
     th,
@@ -156,8 +176,15 @@ body::before {
 }
 
 @media (max-width: 480px) {
+
+    .input-group input,
+    .input-group select {
+        flex: 1 1 100%;
+        /* Full width on very small screens */
+    }
+
     h1 {
-        font-size: 24px;
+        font-size: 15px;
     }
 
     h2 {
@@ -165,37 +192,11 @@ body::before {
     }
 
     table {
-        font-size: 12px;
+        font-size: 8px;
     }
 
     th,
     td {
         padding: 4px;
     }
-}
-
-/* Scrollable Table */
-.scrollable-table {
-    display: block;
-    overflow-y: auto;
-    max-height: 300px;
-    /* Adjust as needed */
-    border: 1px solid #ddd;
-    /* Optional: adds a border */
-}
-
-/* Ensure the table behaves properly inside the scrollable div */
-.scrollable-table table {
-    width: 100%;
-    min-width: 800px;
-    /* Ensures proper scrolling */
-    border-collapse: collapse;
-}
-
-/* Make the header sticky (Optional for better visibility) */
-.scrollable-table thead {
-    position: sticky;
-    top: 0;
-    background-color: #f8f8f8;
-    z-index: 2;
 }
