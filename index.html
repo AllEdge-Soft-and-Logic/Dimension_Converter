@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="/manifest.json">
     <title>Dimension Converter</title>
-
 </head>
 
 <body>
-
     <div class="container">
         <h1 style="text-align: center; background-color:blue; color: white; padding: 0.2em; border-radius: 10px;">
-            Dimension Converter</h1>
+            Dimension Converter- <span style="font-size: small;">Surface Mode Domestic</span></h1>
         <div class="input-group">
             <select id="originalUnitType">
                 <option value="cm">Centimeters (cm)</option>
@@ -26,6 +24,8 @@
             <input type="number" id="length" placeholder="Length">
             <input type="number" id="width" placeholder="Width">
             <input type="number" id="height" placeholder="Height">
+            <input type="number" id="weight" placeholder="Weight">
+            <input type="number" id="cft" placeholder="CFT">
             <select id="convertUnitType">
                 <option value="cm">Centimeters (cm)</option>
                 <option value="mm">Millimeters (mm)</option>
@@ -34,9 +34,7 @@
                 <option value="ft">Feet (ft)</option>
             </select>
             <button onclick="addData()">Add Data</button>
-        </div>
-        <div>
-            <button onclick="exportToExcel()">Download Excel</button>
+            <button onclick="exportToExcel()" class="download-btn">Download Excel</button>
             <button onclick="resetData()" class="reset-btn">Reset</button>
         </div>
         <h2>Combined Data</h2>
@@ -46,23 +44,23 @@
                     <th>Original Length</th>
                     <th>Original Width</th>
                     <th>Original Height</th>
+                    <th>Actual Weight</th>
                     <th>Converted Length</th>
                     <th>Converted Width</th>
                     <th>Converted Height</th>
+                    <th>Volumetric Weight</th>
+                    <th>Chargeable Weight</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
         </table>
-
         <!-- Footer inside the container -->
         <footer>
             <p>&copy; 2018 AllEdge Soft & Logic (OPC) Pvt. Ltd., All rights reserved.</p>
         </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         const combinedData = [];
 
@@ -70,39 +68,42 @@
             const length = parseFloat(document.getElementById('length').value);
             const width = parseFloat(document.getElementById('width').value);
             const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const cft = parseFloat(document.getElementById('cft').value);
 
             const originalUnitType = document.getElementById('originalUnitType').value;
             const convertUnitType = document.getElementById('convertUnitType').value;
 
-            if (isNaN(length) || isNaN(width) || isNaN(height)) {
-                alert("Please enter valid numbers for length, width, and height.");
+            if (isNaN(length) || isNaN(width) || isNaN(height) || isNaN(weight) || isNaN(cft)) {
+                alert("Please enter valid numbers for all fields.");
                 return;
             }
 
-            // Original data (formatted to 2 decimal places)
-            const originalRow = [
-                `${length.toFixed(2)} ${originalUnitType}`,
-                `${width.toFixed(2)} ${originalUnitType}`,
-                `${height.toFixed(2)} ${originalUnitType}`
-            ];
+            const lengthCm = convertUnit(length, originalUnitType, 'cm');
+            const widthCm = convertUnit(width, originalUnitType, 'cm');
+            const heightCm = convertUnit(height, originalUnitType, 'cm');
 
-            // Convert data to the selected unit (formatted to 2 decimal places)
+            const volumetricWeight = ((lengthCm * widthCm * heightCm) / 27000) * cft;
+            const chargeableWeight = Math.max(volumetricWeight, weight).toFixed(2);
+
             const lengthConverted = convertUnit(length, originalUnitType, convertUnitType).toFixed(2);
             const widthConverted = convertUnit(width, originalUnitType, convertUnitType).toFixed(2);
             const heightConverted = convertUnit(height, originalUnitType, convertUnitType).toFixed(2);
 
-            const convertedRow = [
+            const rowData = [
+                `${length.toFixed(2)} ${originalUnitType}`,
+                `${width.toFixed(2)} ${originalUnitType}`,
+                `${height.toFixed(2)} ${originalUnitType}`,
+                weight.toFixed(2),
                 `${lengthConverted} ${convertUnitType}`,
                 `${widthConverted} ${convertUnitType}`,
-                `${heightConverted} ${convertUnitType}`
+                `${heightConverted} ${convertUnitType}`,
+                volumetricWeight.toFixed(2),
+                chargeableWeight
             ];
 
-            // Combine original and converted data
-            const combinedRow = [...originalRow, ...convertedRow];
-            combinedData.push(combinedRow);
-
-            // Add row to the table
-            addRowToTable('combinedTable', combinedRow);
+            combinedData.push(rowData);
+            addRowToTable('combinedTable', rowData);
         }
 
         function convertUnit(value, fromUnit, toUnit) {
@@ -122,14 +123,12 @@
 
             rowData.forEach(data => {
                 const cell = newRow.insertCell();
-                cell.textContent = data; // Values already formatted to 2 decimals
+                cell.textContent = data;
             });
 
-            // Add delete button
             const deleteCell = newRow.insertCell();
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
-            deleteButton.className = 'delete-btn';
             deleteButton.onclick = function () {
                 deleteRow(tableId, newRow.rowIndex - 1);
             };
@@ -137,8 +136,7 @@
         }
 
         function deleteRow(tableId, rowIndex) {
-            const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
-            table.deleteRow(rowIndex);
+            document.getElementById(tableId).getElementsByTagName('tbody')[0].deleteRow(rowIndex);
             combinedData.splice(rowIndex, 1);
         }
 
@@ -146,50 +144,6 @@
             combinedData.length = 0;
             document.getElementById('combinedTable').getElementsByTagName('tbody')[0].innerHTML = '';
         }
-
-        function exportToExcel() {
-            const wb = XLSX.utils.book_new();
-            const combinedWs = XLSX.utils.aoa_to_sheet([
-                ["Original Length", "Original Width", "Original Height", "Converted Length", "Converted Width", "Converted Height"],
-                ...combinedData
-            ]);
-            XLSX.utils.book_append_sheet(wb, combinedWs, "Combined Data");
-            XLSX.writeFile(wb, "Combined_Dimension_Data.xlsx");
-        }
-    </script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then((registration) => {
-                        console.log('Service Worker registered: ', registration);
-
-                        // Check for updates
-                        if (registration.waiting) {
-                            updateServiceWorker(registration);
-                        }
-
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    updateServiceWorker(registration);
-                                }
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        console.log('Service Worker registration failed: ', error);
-                    });
-            });
-        }
-
-        function updateServiceWorker(registration) {
-            if (confirm('New version available. Update now?')) {
-                registration.waiting.postMessage({ action: 'skipWaiting' });
-            }
-        }
-
     </script>
 </body>
 
