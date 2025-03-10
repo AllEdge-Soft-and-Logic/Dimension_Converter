@@ -13,9 +13,15 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center bg-primary text-white p-2 rounded">
+        <!-- Flash News Text -->
+        <marquee behavior="scroll" direction="left" class="bg-warning p-2">
+            <strong>Flash News:</strong> Dimension Converter is now live!. This is for Surface Mode Domestic only. For
+            donations, <a href="upi://pay?pa=shankara.singh6@axl&pn=BizNavigation&cu=INR" target="_blank">click
+                here</a>.
+        </marquee>
+        <h3 class="text-center bg-primary text-white p-2 rounded">
             Dimension Converter
-        </h1>
+        </h3>
         <!-- Input fields and selects in the first row -->
         <div class="row g-1 mb-3">
             <!-- Dimensions Unit -->
@@ -135,8 +141,7 @@
                 <button class="btn btn-danger flex-grow-1" onclick="resetData()">Reset</button>
             </div>
         </div>
-        <br>
-        <h2 class="col-md-12" style="text-align: center;font-weight: bold;">Convert Data</h2>
+        <h4 class="col-md-12" style="text-align: center;font-weight: bold;">Convert Data</h4>
         <div class="table-responsive">
             <table class="table table-bordered" id="combinedTable">
                 <thead>

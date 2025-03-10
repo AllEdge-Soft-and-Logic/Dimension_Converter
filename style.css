@@ -10,6 +10,7 @@ body {
     background-color: #45a049;
 }
 
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -184,7 +185,7 @@ body::before {
     }
 
     h1 {
-        font-size: 15px;
+        font-size: 10px;
     }
 
     h2 {
