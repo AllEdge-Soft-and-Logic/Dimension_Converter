@@ -18,62 +18,123 @@
         </h1>
         <!-- Input fields and selects in the first row -->
         <div class="row g-1 mb-3">
-            <div class="col-md-2 col-sm-6">
-                <label for="originalUnitType">Dimensions Unit</label>
-                <select class="form-select" id="originalUnitType">
-                    <option value="cm">Centimeters (cm)</option>
-                    <option value="mm">Millimeters (mm)</option>
-                    <option value="m">Meters (m)</option>
-                    <option value="in">Inches (in)</option>
-                    <option value="ft">Feet (ft)</option>
-                </select>
+            <!-- Dimensions Unit -->
+            <div class="col-md-4 col-sm-6">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="originalUnitType" class="form-label">Dimensions Unit</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-select" id="originalUnitType">
+                            <option value="cm">Centimeters (cm)</option>
+                            <option value="mm">Millimeters (mm)</option>
+                            <option value="m">Meters (m)</option>
+                            <option value="in">Inches (in)</option>
+                            <option value="ft">Feet (ft)</option>
+                        </select>
+                    </div>
+                </div>
             </div>
+
+            <!-- Length -->
             <div class="col-md-2 col-sm-6">
-                <label for="length">Length</label>
-                <input type="number" class="form-control" id="length" placeholder="Length">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="length" class="form-label">Length</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control" id="length" placeholder="Length">
+                    </div>
+                </div>
             </div>
+
+            <!-- Width -->
             <div class="col-md-2 col-sm-6">
-                <label for="width">Width</label>
-                <input type="number" class="form-control" id="width" placeholder="Width">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="width" class="form-label">Width</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control" id="width" placeholder="Width">
+                    </div>
+                </div>
             </div>
+
+            <!-- Height -->
             <div class="col-md-2 col-sm-6">
-                <label for="height">Height</label>
-                <input type="number" class="form-control" id="height" placeholder="Height">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="height" class="form-label">Height</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control" id="height" placeholder="Height">
+                    </div>
+                </div>
             </div>
+
+            <!-- No of Box -->
             <div class="col-md-2 col-sm-6">
-                <label for="noOfBox">No of Box</label>
-                <input type="number" class="form-control" id="noOfBox" placeholder="No of Box">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="noOfBox" class="form-label">Boxes</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control" id="noOfBox" placeholder="Boxes">
+                    </div>
+                </div>
             </div>
+
+            <!-- Each Box Weight -->
+            <div class="col-md-4 col-sm-6">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="weight" class="form-label">Each Box Weight</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control" id="weight" placeholder="Weight">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CFT -->
             <div class="col-md-2 col-sm-6">
-                <label for="weight">Each Box Weight</label>
-                <input type="number" class="form-control" id="weight" placeholder="Each Box Weight">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="cft" class="form-label">CFT</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control" id="cft" placeholder="CFT">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-2 col-sm-6">
-                <label for="cft">CFT</label>
-                <input type="number" class="form-control" id="cft" placeholder="CFT">
-            </div>
+
+            <!-- Convert Unit Type -->
             <div class="col-md-3 col-sm-6">
-                <label for="convertUnitType">Convert Unit Type</label>
-                <select class="form-select" id="convertUnitType">
-                    <option value="cm">Centimeters (cm)</option>
-                    <option value="mm">Millimeters (mm)</option>
-                    <option value="m">Meters (m)</option>
-                    <option value="in">Inches (in)</option>
-                    <option value="ft">Feet (ft)</option>
-                </select>
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <label for="convertUnitType" class="form-label">Convert To</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-select" id="convertUnitType">
+                            <option value="cm">Centimeters (cm)</option>
+                            <option value="mm">Millimeters (mm)</option>
+                            <option value="m">Meters (m)</option>
+                            <option value="in">Inches (in)</option>
+                            <option value="ft">Feet (ft)</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Buttons in the next row -->
-        <!-- <div class="row g-3 mb-2"> -->
         <div class="col-md-6">
-            <div class="d-flex gap-2"> <!-- Flexbox for buttons with spacing -->
+            <div class="d-flex gap-2">
                 <button class="btn btn-primary flex-grow-1" onclick="addData()">Add Data</button>
                 <button class="btn btn-success flex-grow-1" onclick="exportToExcel()">Download Excel</button>
                 <button class="btn btn-danger flex-grow-1" onclick="resetData()">Reset</button>
             </div>
         </div>
-        <!-- </div> -->
         <br>
         <h2 class="col-md-12" style="text-align: center;font-weight: bold;">Convert Data</h2>
         <div class="table-responsive">
