@@ -127,7 +127,7 @@ body::before {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 30%;
-    opacity: 0.1;
+    opacity: 10;
     z-index: 0;
 }
 
@@ -166,7 +166,7 @@ body::before {
     }
 
     table {
-        font-size: 10px;
+        font-size: 8px;
     }
 
     th,
@@ -192,7 +192,7 @@ body::before {
     }
 
     table {
-        font-size: 8px;
+        font-size: 6px;
     }
 
     th,

@@ -18,7 +18,8 @@
         </h1>
         <!-- Input fields and selects in the first row -->
         <div class="row g-1 mb-3">
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-6">
+                <label for="originalUnitType">Dimensions Unit</label>
                 <select class="form-select" id="originalUnitType">
                     <option value="cm">Centimeters (cm)</option>
                     <option value="mm">Millimeters (mm)</option>
@@ -28,21 +29,31 @@
                 </select>
             </div>
             <div class="col-md-2 col-sm-6">
+                <label for="length">Length</label>
                 <input type="number" class="form-control" id="length" placeholder="Length">
             </div>
             <div class="col-md-2 col-sm-6">
+                <label for="width">Width</label>
                 <input type="number" class="form-control" id="width" placeholder="Width">
             </div>
             <div class="col-md-2 col-sm-6">
+                <label for="height">Height</label>
                 <input type="number" class="form-control" id="height" placeholder="Height">
             </div>
             <div class="col-md-2 col-sm-6">
-                <input type="number" class="form-control" id="weight" placeholder="Weight">
+                <label for="noOfBox">No of Box</label>
+                <input type="number" class="form-control" id="noOfBox" placeholder="No of Box">
             </div>
             <div class="col-md-2 col-sm-6">
+                <label for="weight">Each Box Weight</label>
+                <input type="number" class="form-control" id="weight" placeholder="Each Box Weight">
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <label for="cft">CFT</label>
                 <input type="number" class="form-control" id="cft" placeholder="CFT">
             </div>
             <div class="col-md-3 col-sm-6">
+                <label for="convertUnitType">Convert Unit Type</label>
                 <select class="form-select" id="convertUnitType">
                     <option value="cm">Centimeters (cm)</option>
                     <option value="mm">Millimeters (mm)</option>
@@ -72,6 +83,7 @@
                         <th>Original Length</th>
                         <th>Original Width</th>
                         <th>Original Height</th>
+                        <th>No of Box</th>
                         <th>Actual Weight</th>
                         <th>Converted Length</th>
                         <th>Converted Width</th>

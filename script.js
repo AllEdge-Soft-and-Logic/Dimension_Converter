@@ -12,6 +12,7 @@ const lengthInput = document.getElementById('length');
 const widthInput = document.getElementById('width');
 const heightInput = document.getElementById('height');
 const weightInput = document.getElementById('weight');
+const noOfBoxInput = document.getElementById('noOfBox');
 const cftInput = document.getElementById('cft');
 const originalUnitType = document.getElementById('originalUnitType');
 const convertUnitType = document.getElementById('convertUnitType');
@@ -21,10 +22,11 @@ function addData() {
     const length = parseFloat(lengthInput.value);
     const width = parseFloat(widthInput.value);
     const height = parseFloat(heightInput.value);
+    const noOfBox = parseFloat(noOfBoxInput.value);
     const weight = parseFloat(weightInput.value);
     const cft = parseFloat(cftInput.value);
 
-    if ([length, width, height, weight, cft].some(isNaN)) {
+    if ([length, width, height, weight, noOfBox, cft].some(isNaN)) {
         alert("Please enter valid numbers for all fields.");
         return;
     }
@@ -33,7 +35,9 @@ function addData() {
     const widthCm = convertUnit(width, originalUnitType.value, 'cm');
     const heightCm = convertUnit(height, originalUnitType.value, 'cm');
 
-    const volumetricWeight = ((lengthCm * widthCm * heightCm) / 27000) * cft;
+    const actualWeight = noOfBox * weight;
+
+    const volumetricWeight = (((lengthCm * widthCm * heightCm) / 27000) * cft) * noOfBox;
     const chargeableWeight = Math.max(volumetricWeight, weight).toFixed(2);
 
     const lengthConverted = convertUnit(length, originalUnitType.value, convertUnitType.value).toFixed(2);
@@ -44,7 +48,8 @@ function addData() {
         `${length.toFixed(2)} ${originalUnitType.value}`,
         `${width.toFixed(2)} ${originalUnitType.value}`,
         `${height.toFixed(2)} ${originalUnitType.value}`,
-        weight.toFixed(2),
+        noOfBox.toFixed(2),
+        actualWeight.toFixed(2),
         `${lengthConverted} ${convertUnitType.value}`,
         `${widthConverted} ${convertUnitType.value}`,
         `${heightConverted} ${convertUnitType.value}`,
