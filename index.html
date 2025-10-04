@@ -4,11 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Dimension Converter - Convert dimensions between different units like centimeters, millimeters, meters, inches, and feet. Ideal for surface mode domestic use.">
+    <meta name="keywords"
+        content="Dimension Converter, unit conversion, centimeters, millimeters, meters, inches, feet, surface mode domestic">
+    <meta name="author" content="AllEdge Soft & Logic (OPC) Pvt. Ltd.">
+    <meta name="robots" content="index, follow">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="/manifest.json">
-    <title>Dimension Converter</title>
+    <title>Dimension Converter - Convert Dimensions Easily</title>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWWRED1RP0"></script>
@@ -25,12 +32,13 @@
         <!-- Flash News Text -->
         <marquee behavior="scroll" direction="left" class="bg-warning p-2">
             <strong>Flash News:</strong> Dimension Converter is now live!. This is for Surface Mode Domestic only. For
-            donations, <a href="upi://pay?pa=shankara.singh6@axl&pn=BizNavigation&cu=INR" target="_blank">click
+            donations, <a href="upi://pay?pa=shankara.singh6@axl&pn=BizNavigation&cu=INR" target="_blank"
+                aria-label="Donate via UPI">click
                 here</a>.
         </marquee>
-        <h3 class="text-center bg-primary text-white p-2 rounded">
+        <h1 class="text-center bg-primary text-white p-2 rounded">
             Dimension Converter
-        </h3>
+        </h1>
         <!-- Input fields and selects in the first row -->
         <div class="row g-1 mb-3">
             <!-- Dimensions Unit -->
@@ -150,7 +158,7 @@
                 <button class="btn btn-danger flex-grow-1" onclick="resetData()">Reset</button>
             </div>
         </div>
-        <h4 class="col-md-12" style="text-align: center;font-weight: bold;">Convert Data</h4>
+        <h2 class="col-md-12 text-center font-weight-bold">Convert Data</h2>
         <div class="table-responsive">
             <table class="table table-bordered" id="combinedTable">
                 <thead>
@@ -169,6 +177,17 @@
                     </tr>
                 </thead>
                 <tbody></tbody>
+                <tfoot class="table-secondary fw-bold">
+                    <tr>
+                        <td colspan="3" class="text-end">Totals:</td>
+                        <td id="totalBoxes">0</td>
+                        <td id="totalActualWeight">0</td>
+                        <td colspan="3"></td>
+                        <td id="totalVolumetric">0</td>
+                        <td id="totalChargeable">0</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
 
@@ -176,8 +195,8 @@
         <footer class="mt-4">
             <p>&copy; 2018 AllEdge Soft & Logic (OPC) Pvt. Ltd., All rights reserved. <span id="version"></span></p>
             <span class="text-muted" style="font-size: small;">Surface Mode Domestic</span>
-            For donations, <a href="upi://pay?pa=shankara.singh6@axl&pn=BizNavigation&cu=INR" target="_blank">click
-                here</a>.
+            For donations, <a href="upi://pay?pa=shankara.singh6@axl&pn=BizNavigation&cu=INR" target="_blank"
+                aria-label="Donate via UPI">click here</a>.
         </footer>
     </div>
 

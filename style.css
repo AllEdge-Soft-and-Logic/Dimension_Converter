@@ -1,33 +1,43 @@
-/* General Styles */
+:root {
+    --main-bg: #45a049;
+    --container-bg: rgba(255, 255, 255, 0.9);
+    --container-border: black;
+    --header-bg: #f2f2f2;
+    --footer-bg: #f2f2f2;
+    --btn-red: #ff4444;
+    --btn-red-hover: #cc0000;
+    --btn-orange: #ff9800;
+    --btn-orange-hover: #e68900;
+    --btn-blue: blue;
+    --btn-blue-hover: darkblue;
+    --border-radius: 10px;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 10px;
     padding: 0;
+    min-height: 94.85vh;
+    background-color: var(--main-bg);
     display: flex;
     flex-direction: column;
-    min-height: 94.85vh;
     position: relative;
-    background-color: #45a049;
 }
-
 
 .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid black;
-    border-radius: 10px;
-    border-style: groove;
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.9);
-    position: relative;
-    z-index: 1;
+    border: 1px groove var(--container-border);
+    border-radius: var(--border-radius);
+    background: var(--container-bg);
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    z-index: 1;
+    flex: 1;
 }
 
-/* Input Group */
 .input-group {
     display: flex;
     flex-wrap: wrap;
@@ -41,22 +51,19 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     flex: 1 1 200px;
-    /* Adjusted flex-basis to 200px for better sizing */
     min-width: 150px;
-    /* Ensures a minimum width for smaller screens */
 }
 
 .input-group button {
     flex: 1 1 auto;
     min-width: 100px;
-    /* Ensures buttons don't become too small */
 }
 
-/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    font-size: 100%;
 }
 
 th,
@@ -67,56 +74,53 @@ td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background: var(--header-bg);
 }
 
-/* Button Styles */
 button {
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s;
 }
 
 button.delete-btn {
-    background-color: #ff4444;
-    color: white;
+    background: var(--btn-red);
+    color: #fff;
 }
 
 button.delete-btn:hover {
-    background-color: #cc0000;
+    background: var(--btn-red-hover);
 }
 
 button.reset-btn {
-    background-color: #ff9800;
-    color: white;
+    background: var(--btn-orange);
+    color: #fff;
 }
 
 button.reset-btn:hover {
-    background-color: #e68900;
+    background: var(--btn-orange-hover);
 }
 
 button.download-btn {
-    background-color: blue;
-    color: white;
+    background: var(--btn-blue);
+    color: #fff;
 }
 
 button.download-btn:hover {
-    background-color: darkblue;
+    background: var(--btn-blue-hover);
 }
 
-/* Footer Styles */
 footer {
     text-align: center;
     padding: 10px;
-    background-color: #f2f2f2;
+    background: var(--footer-bg);
     margin-top: auto;
     border-top: 1px solid #ddd;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
-/* Watermark Style */
 body::before {
     content: "";
     position: absolute;
@@ -124,15 +128,12 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('assets/img/icon.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 30%;
-    opacity: 10;
+    background: url('assets/img/icon.png') no-repeat center/30%;
+    opacity: 0.10;
     z-index: 0;
+    pointer-events: none;
 }
 
-/* Scrollable Table */
 .scrollable-table {
     display: block;
     overflow-y: auto;
@@ -141,19 +142,16 @@ body::before {
 }
 
 .scrollable-table table {
-    width: 100%;
     min-width: 800px;
-    border-collapse: collapse;
 }
 
 .scrollable-table thead {
     position: sticky;
     top: 0;
-    background-color: #f8f8f8;
+    background: #f8f8f8;
     z-index: 2;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .input-group {
         flex-direction: column;
@@ -180,12 +178,11 @@ body::before {
 
     .input-group input,
     .input-group select {
-        flex: 1 1 100%;
-        /* Full width on very small screens */
+        flex-basis: 100%;
     }
 
     h1 {
-        font-size: 10px;
+        font-size: 14px;
     }
 
     h2 {
@@ -200,4 +197,8 @@ body::before {
     td {
         padding: 4px;
     }
+}
+
+marquee {
+    border-radius: var(--border-radius);
 }

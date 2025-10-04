@@ -1,20 +1,26 @@
 {
-    "short_name": "Converter",
-    "name": "Dimension Converter",
-    "icons": [
-      {
-        "src": "assets/img/icon-192x192.png",
-        "type": "image/png",
-        "sizes": "192x192"
-      },
-      {
-        "src": "assets/img/icon-512x512.png",
-        "type": "image/png",
-        "sizes": "512x512"
-      }
-    ],
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#45a049",
-    "theme_color": "#45a049"
-  }
+  "id": "/",
+  "short_name": "Converter",
+  "name": "Dimension Converter",
+  "description": "Convert dimensions between centimeters, millimeters, meters, inches, and feet for surface mode domestic use.",
+  "icons": [
+    {
+      "src": "assets/img/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/img/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#45a049",
+  "theme_color": "#45a049",
+  "orientation": "portrait",
+  "lang": "en",
+  "prefer_related_applications": false
+}

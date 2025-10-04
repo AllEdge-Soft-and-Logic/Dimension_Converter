@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v12.01';
+const CACHE_NAME = 'v12.03';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -7,63 +7,54 @@ const ASSETS_TO_CACHE = [
     '/script.js',
     '/manifest.json',
     '/service-worker.js',
-    // Add other static assets here
+    // Add '/offline.html' if you want offline fallback
 ];
 
-// Install the service worker and cache assets
-self.addEventListener('install', (event) => {
+// Install: Cache critical assets
+self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => cache.addAll(ASSETS_TO_CACHE))
-            .then(() => self.skipWaiting()) // Activate the new service worker immediately
-            .catch((error) => {
-                console.error('Failed to cache assets:', error);
-            })
+        (async () => {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.addAll(ASSETS_TO_CACHE);
+            await self.skipWaiting();
+        })().catch(error => {
+            console.error('Failed to cache assets:', error);
+        })
     );
 });
 
-// Fetch cached assets or fallback to network
-self.addEventListener('fetch', (event) => {
+// Fetch: Serve from cache, update cache if possible
+self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                // Return cached response if found
-                if (response) {
-                    return response;
+        (async () => {
+            const cache = await caches.open(CACHE_NAME);
+            const cached = await cache.match(event.request);
+            if (cached) return cached;
+            try {
+                const response = await fetch(event.request);
+                if (event.request.method === 'GET' && response.ok) {
+                    cache.put(event.request, response.clone());
                 }
-
-                // Fetch from network if not in cache
-                return fetch(event.request)
-                    .then((networkResponse) => {
-                        // Cache the new response for future requests
-                        if (event.request.method === 'GET' && networkResponse.ok) {
-                            const responseToCache = networkResponse.clone();
-                            caches.open(CACHE_NAME)
-                                .then((cache) => cache.put(event.request, responseToCache));
-                        }
-                        return networkResponse;
-                    })
-                    .catch(() => {
-                        // Fallback to a custom offline page or response
-                        return caches.match('/offline.html'); // Ensure you have an offline.html file
-                    });
-            })
+                return response;
+            } catch {
+                // Fallback: show offline page if exists
+                return cache.match('/offline.html');
+            }
+        })()
     );
 });
 
-// Clean up old caches
-self.addEventListener('activate', (event) => {
+// Activate: Remove old caches
+self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys()
-            .then((cacheNames) => {
-                return Promise.all(
-                    cacheNames.map((cacheName) => {
-                        if (cacheName !== CACHE_NAME) {
-                            return caches.delete(cacheName);
-                        }
-                    })
-                );
-            })
-            .then(() => self.clients.claim()) // Take control of all clients immediately
+        (async () => {
+            const keys = await caches.keys();
+            await Promise.all(
+                keys
+                    .filter(name => name !== CACHE_NAME)
+                    .map(name => caches.delete(name))
+            );
+            await self.clients.claim();
+        })()
     );
 });
