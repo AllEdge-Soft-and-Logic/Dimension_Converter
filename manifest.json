@@ -1,5 +1,5 @@
 {
-  "id": "/",
+  "id": "dimension_converter",
   "short_name": "Converter",
   "name": "Dimension Converter",
   "description": "Convert dimensions between centimeters, millimeters, meters, inches, and feet for surface mode domestic use.",
